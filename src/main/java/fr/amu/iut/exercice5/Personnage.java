@@ -4,6 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
+
 class Personnage extends Group {
     protected final static double LARGEUR_MOITIE_PERSONNAGE = 10;
     protected final static double LARGEUR_PERSONNAGE = LARGEUR_MOITIE_PERSONNAGE * 2;
@@ -54,7 +56,12 @@ class Personnage extends Group {
         //  *   |   *
         //   *  |  *
         //    *****
-
+        if (getLayoutY() < hauteurJeu - LARGEUR_PERSONNAGE) {
+            setLayoutY(getLayoutY() + LARGEUR_PERSONNAGE);
+        }
+        if (!direction.equals("bas")) {
+            direction = "bas";
+        }
     }
 
     public void deplacerEnHaut() {
@@ -63,12 +70,25 @@ class Personnage extends Group {
         //  *   |   *
         //   *     *
         //    *****
-
+        if (getLayoutY() >= LARGEUR_PERSONNAGE) {
+            setLayoutY(getLayoutY() - LARGEUR_PERSONNAGE);
+        }
+        if (!direction.equals("haut")) {
+            direction = "haut";
+        }
     }
 
     boolean estEnCollision(Personnage autrePersonnage) {
         return getBoundsInParent().contains(autrePersonnage.getBoundsInParent())
                 || autrePersonnage.getBoundsInParent().contains(getBoundsInParent());
+    }
+
+    boolean estEnCollision(ArrayList<Obstacle> obstacles) {
+        for (Obstacle obstacle : obstacles){
+            if (getBoundsInParent().contains(obstacle.getBoundsInParent())
+                    || obstacle.getBoundsInParent().contains(getBoundsInParent())) return true;
+        }
+        return false;
     }
 
 }

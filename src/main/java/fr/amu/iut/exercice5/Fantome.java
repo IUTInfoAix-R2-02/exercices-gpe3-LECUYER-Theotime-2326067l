@@ -39,23 +39,38 @@ public class Fantome extends Personnage {
 
     @Override
     public void deplacerAGauche() {
-
-
+        super.deplacerAGauche();
+        super.getChildren().removeAll(retineGauche, retineDroite);
+        retineGauche = new Circle(oeilGauche.getCenterX() - 1, 6, 1, Color.BLACK);
+        retineDroite = new Circle(oeilDroit.getCenterX() - 1, 6, 1, Color.BLACK);
+        super.getChildren().addAll(retineGauche,retineDroite);
     }
 
     @Override
     public void deplacerADroite(double largeurJeu) {
-
+        super.deplacerADroite(largeurJeu);
+        super.getChildren().removeAll(retineGauche, retineDroite);
+        retineGauche = new Circle(oeilGauche.getCenterX() + 1, 6, 1, Color.BLACK);
+        retineDroite = new Circle(oeilDroit.getCenterX() + 1, 6, 1, Color.BLACK);
+        super.getChildren().addAll(retineGauche,retineDroite);
     }
 
     @Override
     public void deplacerEnBas(double hauteurJeu) {
-
+        super.deplacerEnBas(hauteurJeu);
+        super.getChildren().removeAll(retineGauche, retineDroite);
+        retineGauche = new Circle(oeilGauche.getCenterX(), oeilGauche.getCenterY() + 1, 1, Color.BLACK);
+        retineDroite = new Circle(oeilDroit.getCenterX(), oeilDroit.getCenterY() + 1, 1, Color.BLACK);
+        super.getChildren().addAll(retineGauche,retineDroite);
     }
 
     @Override
     public void deplacerEnHaut() {
-
+        super.deplacerEnHaut();
+        super.getChildren().removeAll(retineGauche, retineDroite);
+        retineGauche = new Circle(oeilGauche.getCenterX(), oeilGauche.getCenterY() - 1, 1, Color.BLACK);
+        retineDroite = new Circle(oeilDroit.getCenterX(), oeilDroit.getCenterY() - 1, 1, Color.BLACK);
+        super.getChildren().addAll(retineGauche,retineDroite);
     }
 
 
