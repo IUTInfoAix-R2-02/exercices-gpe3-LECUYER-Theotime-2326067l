@@ -18,6 +18,8 @@ import java.util.Objects;
 
 public class IHMPendu extends Application {
 
+    private boolean ended = false;
+
     private String mot;
 
     private int viesCpt;
@@ -61,6 +63,19 @@ public class IHMPendu extends Application {
         this.motLabel.setStyle("-fx-font-weight:bold;-fx-font-size:40px");
         this.root.getChildren().add(this.motLabel);
 
+        initClavier();
+        this.root.getChildren().add(this.clavier);
+
+        this.root.getChildren().forEach(child -> VBox.setMargin(child, new Insets(5.0d)));
+
+        Scene scene = new Scene(this.root);
+
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
+    }
+
+    public void initClavier() {
         this.clavier = new GridPane();
         this.clavier.setAlignment(Pos.CENTER);
         char[] voyelles = {'a','e','i','o','u','y'};
@@ -83,15 +98,6 @@ public class IHMPendu extends Application {
             row++;
             offset = 0;
         }
-        this.root.getChildren().add(this.clavier);
-
-        this.root.getChildren().forEach(child -> VBox.setMargin(child, new Insets(5.0d)));
-
-        Scene scene = new Scene(this.root);
-
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
     }
 
     public static void main(String[] args) {
@@ -99,6 +105,7 @@ public class IHMPendu extends Application {
     }
 
     public void checkIfChar(char lettre, Button node){
+        if(ended) return;
         Dico dico = new Dico();
         ArrayList<Integer> positions = dico.getPositions(lettre,this.mot);
         if (positions.size() >= 1){
@@ -127,7 +134,7 @@ public class IHMPendu extends Application {
     }
 
     public void endGame() {
-        this.clavier.getChildren().forEach(child -> child.setDisable(true));
+        this.ended = true;
         Button restart = new Button("Rejouer");
         restart.setStyle("-fx-border-radius:50%;-fx-background-color:transparent;-fx-border-color:#62cab3;-fx-text-fill:#f3bda1;-fx-font-weight:bold;");
         restart.setOnAction(actionEvent -> restartGame(restart));
@@ -144,6 +151,7 @@ public class IHMPendu extends Application {
         this.pendu.setGraphic(imageView);
         this.root.getChildren().remove(restartButton);
         this.clavier.getChildren().forEach(child -> child.setDisable(false));
+        this.ended = false;
     }
 }
 
