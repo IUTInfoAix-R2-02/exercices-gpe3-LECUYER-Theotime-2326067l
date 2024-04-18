@@ -20,11 +20,17 @@ public class IHMPendu extends Application {
 
     private String mot;
 
-    private int vies;
+    private int viesCpt;
+
+    private Label viesLabel;
 
     private Label motLabel;
 
     private Label pendu;
+
+    private GridPane clavier;
+
+    private VBox root;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -32,29 +38,31 @@ public class IHMPendu extends Application {
         primaryStage.setWidth(500);
         primaryStage.setHeight(550);
 
-        vies = 7;
+        this.viesCpt = 7;
 
         Dico dico = new Dico();
         this.mot = dico.getMot();
         System.out.println(this.mot);
 
-        VBox root = new VBox();
-        root.setStyle("-fx-background-color:#dafdf7");
-        root.setAlignment(Pos.CENTER);
+        this.root = new VBox();
+        this.root.setStyle("-fx-background-color:#dafdf7");
+        this.root.setAlignment(Pos.CENTER);
 
         pendu = new Label();
-        ImageView imageView = new ImageView("exercice6/pendu" + vies +".png");
+        ImageView imageView = new ImageView("exercice6/pendu" + this.viesCpt +".png");
         pendu.setGraphic(imageView);
-        root.getChildren().add(pendu);
+        this.root.getChildren().add(pendu);
 
-        Label vies = new Label("Nombre de vies :");
-        root.getChildren().add(vies);
+        this.viesLabel = new Label("Nombre de vies : " + this.viesCpt);
+        viesLabel.setStyle("-fx-font-weight:bold");
+        this.root.getChildren().add(viesLabel);
 
-        this.motLabel = new Label("*".repeat(mot.length()));
-        root.getChildren().add(this.motLabel);
+        this.motLabel = new Label("*".repeat(this.mot.length()));
+        this.motLabel.setStyle("-fx-font-weight:bold;-fx-font-size:40px");
+        this.root.getChildren().add(this.motLabel);
 
-        GridPane clavier = new GridPane();
-        clavier.setAlignment(Pos.CENTER);
+        this.clavier = new GridPane();
+        this.clavier.setAlignment(Pos.CENTER);
         char[] voyelles = {'a','e','i','o','u','y'};
         char[] consonnes1 = {'b','c','d','f','g','h','j','k','l','m'};
         char[] consonnes2 = {'n','p','q','r','s','t','v','w','x','z'};
@@ -63,9 +71,9 @@ public class IHMPendu extends Application {
         for (char[] jeu : new char[][]{voyelles, consonnes1, consonnes2}) {
             for (int i = 0; i < jeu.length; i++) {
                 Button bouton = new Button(String.valueOf(jeu[i]));
-                bouton.setStyle("-fx-border-color:#d9c5aa;-fx-background-color:transparent;-fx-pref-width:50px;-fx-pref-height:50px");
-                bouton.setMinWidth(20.0d);
-                bouton.setMinHeight(20.0d);
+                bouton.setStyle("-fx-border-radius:10px;-fx-border-color:#f3bda1;-fx-background-color:transparent;-fx-text-fill:#62cab3;-fx-font-weight:bold;");
+                bouton.setMinWidth(45.0d);
+                bouton.setMinHeight(45.0d);
                 int finalI = i;
                 bouton.setOnAction(actionEvent -> checkIfChar(jeu[finalI], bouton));
                 GridPane.setColumnIndex(bouton, i+offset);
@@ -75,11 +83,11 @@ public class IHMPendu extends Application {
             row++;
             offset = 0;
         }
-        root.getChildren().add(clavier);
+        this.root.getChildren().add(this.clavier);
 
-        root.getChildren().forEach(child -> VBox.setMargin(child, new Insets(5.0d)));
+        this.root.getChildren().forEach(child -> VBox.setMargin(child, new Insets(5.0d)));
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(this.root);
 
         primaryStage.setScene(scene);
 
@@ -96,18 +104,11 @@ public class IHMPendu extends Application {
         if (positions.size() >= 1){
             discoverLetter(positions, lettre);
         } else {
-            vies--;
-            ImageView imageView = new ImageView("exercice6/pendu" + vies +".png");
+            viesCpt--;
+            this.viesLabel.setText("Nombre de vies : " + this.viesCpt);
+            ImageView imageView = new ImageView("exercice6/pendu" + viesCpt +".png");
             this.pendu.setGraphic(imageView);
-            if (vies == 0) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                Platform.exit();
-                System.exit(0);
-            }
+            if (viesCpt == 0) endGame();
         }
         node.setDisable(true);
     }
@@ -121,13 +122,28 @@ public class IHMPendu extends Application {
         if (this.mot.equalsIgnoreCase(this.motLabel.getText())) {
             ImageView imageView = new ImageView("exercice6/penduWin.png");
             this.pendu.setGraphic(imageView);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            Platform.exit();
-            System.exit(0);
+            endGame();
         }
     }
+
+    public void endGame() {
+        this.clavier.getChildren().forEach(child -> child.setDisable(true));
+        Button restart = new Button("Rejouer");
+        restart.setStyle("-fx-border-radius:50%;-fx-background-color:transparent;-fx-border-color:#62cab3;-fx-text-fill:#f3bda1;-fx-font-weight:bold;");
+        restart.setOnAction(actionEvent -> restartGame(restart));
+        this.root.getChildren().add(restart);
+    }
+
+    public void restartGame(Button restartButton) {
+        this.mot = (new Dico()).getMot();
+        System.out.println(this.mot);
+        this.motLabel.setText("*".repeat(this.mot.length()));
+        this.viesCpt = 7;
+        this.viesLabel.setText("Nombre de vies : " + this.viesCpt);
+        ImageView imageView = new ImageView("exercice6/pendu" + this.viesCpt +".png");
+        this.pendu.setGraphic(imageView);
+        this.root.getChildren().remove(restartButton);
+        this.clavier.getChildren().forEach(child -> child.setDisable(false));
+    }
 }
+
