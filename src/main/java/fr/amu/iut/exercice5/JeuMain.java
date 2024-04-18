@@ -23,7 +23,7 @@ public class JeuMain extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        mouvementsPacman = 10;
+        mouvementsPacman = 10000000;
 
         root = new BorderPane();
 
