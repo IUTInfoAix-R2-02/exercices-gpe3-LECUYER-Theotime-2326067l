@@ -65,38 +65,30 @@ public class JeuMain extends Application {
     private void deplacer(Personnage j1, Personnage j2) {
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
-                case LEFT:
+                case LEFT -> {
                     mouvementsPacman--;
                     j1.deplacerAGauche();
                     if (j1.estEnCollision(obstacles)) j1.deplacerADroite(scene.getWidth());
-                    break;
-                case RIGHT:
+                }
+                case RIGHT -> {
                     mouvementsPacman--;
                     j1.deplacerADroite(scene.getWidth());
                     if (j1.estEnCollision(obstacles)) j1.deplacerAGauche();
-                    break;
-                case UP:
+                }
+                case UP -> {
                     mouvementsPacman--;
                     j1.deplacerEnHaut();
                     if (j1.estEnCollision(obstacles)) j1.deplacerEnBas(scene.getHeight());
-                    break;
-                case DOWN:
+                }
+                case DOWN -> {
                     mouvementsPacman--;
                     j1.deplacerEnBas(scene.getHeight());
                     if (j1.estEnCollision(obstacles)) j1.deplacerEnHaut();
-                    break;
-                case Z:
-                    j2.deplacerEnHaut();
-                    break;
-                case Q:
-                    j2.deplacerAGauche();
-                    break;
-                case S:
-                    j2.deplacerEnBas(scene.getHeight());
-                    break;
-                case D:
-                    j2.deplacerADroite(scene.getWidth());
-
+                }
+                case Z -> j2.deplacerEnHaut();
+                case Q -> j2.deplacerAGauche();
+                case S -> j2.deplacerEnBas(scene.getHeight());
+                case D -> j2.deplacerADroite(scene.getWidth());
             }
             if (j1.estEnCollision(j2)) {
                 System.out.println("Collision....");
