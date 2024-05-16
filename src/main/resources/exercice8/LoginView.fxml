@@ -7,7 +7,7 @@
 
 <BorderPane stylesheets="exercice8/Login.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.amu.iut.exercice8.LoginControl">
    <center>
-      <GridPane alignment="CENTER" hgap="100.0" styleClass="root" vgap="20">
+      <GridPane alignment="CENTER" hgap="100.0" styleClass="root" vgap="10.0">
           <Text id="welcome-text" text="Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
       
           <Label text="User Id:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -33,21 +33,21 @@
               <Insets />
           </opaqueInsets>
           <padding>
-              <Insets bottom="10.0" left="10.0" right="10.0" />
+              <Insets left="10.0" right="10.0" top="10.0" />
           </padding>
       </GridPane>
    </center>
    <bottom>
-      <HBox alignment="CENTER" fillHeight="false" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" fillHeight="false">
          <children>
          
-             <Button text="Ok" HBox.hgrow="ALWAYS">
+             <Button onAction="#okClicked" text="Ok" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Button>
          
-             <Button text="Cancel" HBox.hgrow="ALWAYS" />
+             <Button onAction="#cancelClicked" text="Cancel" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </bottom>
