@@ -1,2 +1,103 @@
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane></BorderPane>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New"/>
+                        <MenuItem mnemonicParsing="false" text="Open"/>
+                        <MenuItem mnemonicParsing="false" text="Save"/>
+                        <MenuItem mnemonicParsing="false" text="Close"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Cut"/>
+                        <MenuItem mnemonicParsing="false" text="Copy"/>
+                        <MenuItem mnemonicParsing="false" text="Paste"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <left>
+        <HBox BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" spacing="5.0">
+                    <children>
+                        <Label text="Boutons :"/>
+                        <Button mnemonicParsing="false" text="Bouton 1"/>
+                        <Button mnemonicParsing="false" text="Bouton 2"/>
+                        <Button mnemonicParsing="false" text="Bouton 3"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </HBox.margin>
+                </VBox>
+                <Separator orientation="VERTICAL" prefHeight="200.0"/>
+            </children>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+        </HBox>
+    </left>
+    <bottom>
+        <VBox alignment="BOTTOM_CENTER" BorderPane.alignment="BOTTOM_CENTER">
+            <children>
+                <Separator prefWidth="200.0"/>
+                <HBox alignment="BOTTOM_CENTER" fillHeight="false">
+                    <children>
+                        <Label text="Ceci est un label de bas de page"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </bottom>
+    <center>
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" BorderPane.alignment="CENTER">
+            <children>
+                <GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" vgap="5.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                        <ColumnConstraints hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Name:"/>
+                        <TextField GridPane.columnIndex="1"/>
+                        <Label text="Email:" GridPane.rowIndex="1"/>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Password:" GridPane.rowIndex="2"/>
+                        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    </children>
+                </GridPane>
+                <HBox alignment="BOTTOM_CENTER" spacing="10.0">
+                    <children>
+                        <Button mnemonicParsing="false" text="Submit"/>
+                        <Button mnemonicParsing="false" text="Cancel"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </padding>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>
