@@ -1,6 +1,10 @@
-package fr.amu.iut.exercice1;
+package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,6 +25,12 @@ public class Palette extends Application {
     private int nbRouge = 0;
     private int nbBleu = 0;
 
+    private IntegerProperty nbFois = new SimpleIntegerProperty();
+
+    private StringProperty message = new SimpleStringProperty();
+
+    private StringProperty couleurPanneau = new SimpleStringProperty("#000000");
+
     private Label texteDuHaut;
 
     private Button vert;
@@ -33,6 +43,13 @@ public class Palette extends Application {
 
     private Label texteDuBas;
 
+    private void createBindings() {
+        texteDuHaut.textProperty().bind(Bindings.concat(message, " choisi ", nbFois.asString(), " fois"));
+        BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty(true);
+        pasEncoreDeClic.bind(Bindings.equal(nbFois, 0));
+        panneau.styleProperty().bind(Bindings.concat("-fx-background-color:", couleurPanneau));
+        panneau.disableProperty().bind(Bindings.when(pasEncoreDeClic).then(true).otherwise(false));
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -53,9 +70,36 @@ public class Palette extends Application {
         bas.setAlignment(Pos.CENTER_RIGHT);
         bas.getChildren().addAll(boutons, texteDuBas);
 
+        createBindings();
+
+        EventHandler<ActionEvent> clickButton = event -> {
+            String title = ((Button) event.getSource()).getText();
+            message.set(title);
+            switch (title) {
+                case "Vert" -> {
+                    nbVert++;
+                    nbFois.set(nbVert);
+                    couleurPanneau.set("#31bca4");
+                }
+                case "Rouge" -> {
+                    nbRouge++;
+                    nbFois.set(nbRouge);
+                    couleurPanneau.set("#dd1446");
+                }
+                case "Bleu" -> {
+                    nbBleu++;
+                    nbFois.set(nbBleu);
+                    couleurPanneau.set("#458");
+                }
+            }
+        };
+
         vert = new Button("Vert");
+        vert.setOnAction(clickButton);
         rouge = new Button("Rouge");
+        rouge.setOnAction(clickButton);
         bleu = new Button("Bleu");
+        bleu.setOnAction(clickButton);
 
         /* VOTRE CODE ICI */
 
