@@ -44,11 +44,11 @@ public class Palette extends Application {
     private Label texteDuBas;
 
     private void createBindings() {
-        texteDuHaut.textProperty().bind(Bindings.concat(message, " choisi ", nbFois.asString(), " fois"));
+//        texteDuHaut.textProperty().bind(Bindings.concat(message, " choisi ", nbFois.asString(), " fois"));
         BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty(true);
         pasEncoreDeClic.bind(Bindings.equal(nbFois, 0));
         panneau.styleProperty().bind(Bindings.concat("-fx-background-color:", couleurPanneau));
-        panneau.disableProperty().bind(Bindings.when(pasEncoreDeClic).then(true).otherwise(false));
+        texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic).then("Choisissez une couleur").otherwise(Bindings.concat(message, " choisi ", nbFois.asString(), " fois")));
     }
 
     @Override
