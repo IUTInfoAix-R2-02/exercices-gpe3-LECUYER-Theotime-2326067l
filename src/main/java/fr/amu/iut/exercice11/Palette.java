@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -48,7 +49,8 @@ public class Palette extends Application {
         BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty(true);
         pasEncoreDeClic.bind(Bindings.equal(nbFois, 0));
         panneau.styleProperty().bind(Bindings.concat("-fx-background-color:", couleurPanneau));
-        texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic).then("Choisissez une couleur").otherwise(Bindings.concat(message, " choisi ", nbFois.asString(), " fois")));
+        texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic).then("").otherwise(Bindings.concat(message, " choisi ", nbFois.asString(), " fois")));
+        texteDuBas.textProperty().bind(Bindings.when(pasEncoreDeClic).then("").otherwise(Bindings.concat("Le ", message, " est une jolie couleur !")));
     }
 
     @Override
@@ -92,6 +94,7 @@ public class Palette extends Application {
                     couleurPanneau.set("#458");
                 }
             }
+            texteDuBas.setTextFill(Color.web(couleurPanneau.get()));
         };
 
         vert = new Button("Vert");
